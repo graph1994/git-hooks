@@ -1,9 +1,11 @@
 #!/usr/bin/env python
-import sys, os
-import subprocess
+import sys, os, subprocess, random
 commit_msg_filepath = sys.argv[1]
-isInitialCommit = subprocess.Popen(["git", "rev-parse", "--verify", "HEAD", ">/dev/null", "2>&1"], stdout=subprocess.PIPE).communicate()[0]
+# check for if there any commits
+isInitialCommit = not subprocess.Popen(["git", "rev-parse", "--verify", "HEAD", ">/dev/null", "2>&1"], stdout=subprocess.PIPE).communicate()[0]
+emoticonList = ["(ノಠ益ಠ)ノ彡┻━┻", "ಠ_ಠ", "┬─┬ノ( º _ ºノ)", "(╯°□°）╯︵ ┻━┻"]
 
-if not isInitialCommit:
+if isInitialCommit:
     with open(commit_msg_filepath, 'w') as f:
-        f.write("# Please include a useful commit message!")
+        # pick random emoticon!
+        f.write(random.choice(emoticonList))
